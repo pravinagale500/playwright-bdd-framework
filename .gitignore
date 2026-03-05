@@ -1,4 +1,5 @@
-node_modules
+# Ignore node_modules directory
+node_modules/
 .env
 playwright-report
 test-results
