@@ -109,32 +109,40 @@ npm install
 
 ## 📖 Example
 
-**Sample Gherkin Scenario (`tests/features/login.feature`):**
+**Actual Feature File (`tests/features/login.feature`):**
 ```gherkin
-Feature: Login
-	Scenario: Successful login
-		Given I am on the login page
-		When I enter valid credentials
-		Then I should see the dashboard
+Feature: Login Test
+
+Scenario Outline: Login with multiple users
+
+Given user opens login page
+When user enters "<username>" and "<password>"
+Then user should see dashboard
+
+Examples:
+| username      | password     |
+| standard_user | secret_sauce |
+| problem_user  | secret_sauce |
 ```
 
-**Sample Step Definition (`tests/stepDefinitions/loginSteps.js`):**
+**Actual Step Definitions (`tests/stepDefinitions/loginSteps.js`):**
 ```js
-const { Given, When, Then } = require('@cucumber/cucumber');
+const {Given, When, Then} = require('@cucumber/cucumber');
+const LoginPage = require('../../pages/LoginPage');
+const config = require('../../config/env');
 
-Given('I am on the login page', async function () {
-	await this.page.goto('https://example.com/login');
+Given(/^user opens login page$/, async function(){
+		this.loginPage = new LoginPage(this.page);
+		await this.page.goto(config.baseURL);
 });
 
-When('I enter valid credentials', async function () {
-	await this.page.fill('#username', 'user');
-	await this.page.fill('#password', 'pass');
-	await this.page.click('button[type="submit"]');
+When(/^user enters "([^"]*)" and "([^"]*)"$/, async function(username, password){
+		await this.loginPage.login(username, password);
 });
 
-Then('I should see the dashboard', async function () {
-	await this.page.waitForSelector('#dashboard');
-});
+Then(/^user should see dashboard$/, async function(){
+		await this.page.waitForSelector(".inventory_list");
+})
 ```
 
 ---
