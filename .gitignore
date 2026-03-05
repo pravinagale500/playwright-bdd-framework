@@ -1,0 +1,4 @@
+node_modles
+.env
+playwright-report
+test-results

@@ -1,0 +1,46 @@
+{
+  "name": "playwright-bdd-framework",
+  "version": "1.0.0",
+  "description": "Playwright JavaScript Automation Framework with BDD, POM, Cross Browser, Parallel Execution",
+  "main": "index.js",
+  "scripts": {
+    
+    "test": "cucumber-js tests/features --require tests/stepDefinitions --require tests/hooks",
+
+    "test:parallel": "cucumber-js tests/features --require tests/stepDefinitions --require tests/hooks --parallel 4",
+
+    "test:retry": "cucumber-js tests/features --require tests/stepDefinitions --require tests/hooks --retry 2",
+
+    "test:chrome": "cross-env BROWSER=chromium npm run test",
+
+    "test:firefox": "cross-env BROWSER=firefox npm run test",
+
+    "test:webkit": "cross-env BROWSER=webkit npm run test",
+
+    "test:staging": "cross-env BASE_URL=https://staging.saucedemo.com npm run test",
+
+    "test:ci": "npm run test:parallel",
+
+    "clean": "rm -rf node_modules",
+
+    "reinstall": "npm run clean && npm install"
+
+  },
+  "keywords": [
+    "playwright",
+    "automation",
+    "bdd",
+    "cucumber",
+    "qa",
+    "testing"
+  ],
+  "author": "Pravin Agale",
+  "license": "ISC",
+  "dependencies": {
+    "@cucumber/cucumber": "^12.7.0",
+    "chai": "^6.2.2",
+    "dotenv": "^17.3.1",
+    "mocha": "^11.3.0",
+    "playwright": "^1.58.2"
+  }
+}
