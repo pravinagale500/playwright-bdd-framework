@@ -12,5 +12,6 @@ Before(async function(){
 
 After(async function(){
 
-    await this.browser.close();
+        await this.browser.close();
+    
 });
